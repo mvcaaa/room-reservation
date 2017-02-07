@@ -1,0 +1,70 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+    <title>Angular.js Room Reservation App</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/ngProgress.css">
+    <link rel="stylesheet" href="css/toaster.css">
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+<body ng-cloak>
+<div class="container" ng-controller="RoomsCtrl">
+    <form name="Codenx" novalidate>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Room Title</th>
+                <th>Reserved</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input class="form-control" ng-model="room.title" required="" placeholder="Room Name"></td>
+                <td><input class="form-control" ng-model="room.reservations.client_name" placeholder="Client name"></td>
+                <td>
+                    <button class="btn btn-primary" ng-click="add(room)" ng-if="!room.id" type="submit"
+                            ng-disabled="!Codenx.$valid">Add Room
+                    </button>
+                    <div class="btn-group">
+                        <button class="btn btn-info" ng-click="update(room)" ng-if="room.id" type="submit">Update
+                        </button>
+                        <button class="btn" ng-click="deselect()" ng-if="room.id">Clear</button>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat="room in rooms" class="{{room.reservations.client_name ? 'danger' : 'success'}}">
+                <td>{{room.title}}</td>
+                <td>
+                    {{room.reservations.client_name ? room.reservations.client_name : '---'}}
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-danger" ng-click="remove(room)">Remove</button>
+                        <button class="btn btn-warning" ng-click="edit(room.id)">Edit</button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+</div>
+
+<div data-loading></div>
+<toaster-container
+        toaster-options="{'time-out': 3100, 'close-button':true, 'animation-class': 'toast-top-center'}"></toaster-container>
+
+<script src="js/angular.min.js"></script>
+<script src="js/angular-resource.min.js"></script>
+<script src="js/angular-animate.min.js"></script>
+<script src="js/ngProgress.min.js"></script>
+<script src="js/toaster.js"></script>
+<script src="app/app.js"></script>
+<script src="app/rooms.js"></script>
+</body>
+</html>
